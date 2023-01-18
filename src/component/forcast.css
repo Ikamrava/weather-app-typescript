@@ -1,0 +1,63 @@
+.forcastSection{
+    margin-top: 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.forcastSection h2{
+ font-weight: 900;
+}
+
+.forcastSection span {
+    font-weight: 100;
+}
+
+
+.degree{
+    font-size: 2.5rem;
+    font-weight: 900;
+}
+
+.daysWrapper{
+    display: flex;
+    overflow: -moz-scrollbars-vertical;
+    overflow-x: scroll;
+    padding:2rem 0;
+    justify-content: flex-start;
+        
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .5);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
+.hourly-degree{
+    font-weight: 900;
+}
+
+.forcatsDetails{
+    display: flex;
+    justify-content: space-between;
+}
+
+.double_section{
+    background: rgba(255, 255, 255, 0.3);
+    width: 49%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    
+    padding-top: 1rem;
+}
+
+.double_section span{
+    font-weight: bold;
+    font-size: 1rem;
+}

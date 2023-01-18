@@ -1,11 +1,14 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
+import { optionTypes } from './types/model'
+import Search from './component/Search'
 
 function App():JSX.Element {
-   //http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
+   //https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
   const [term,setTerm ] = useState<string>("")
   const Key = "bbf1e6c66409475f1b02cca8a05809fc"
   const [options,setOptions] = useState<[]>([]) 
+  const [city,setCity ] = useState<optionTypes | null>(null)
 
   const getSearchOptions=(value:string)=>{
     fetch (`http://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=${Key}`)
@@ -23,32 +26,40 @@ function App():JSX.Element {
     const value = e.target.value.trim()
     setTerm(value)
     if(value ===""){return}
-
     getSearchOptions(value)
-
-   
   }
+
+  const getForcast =(city:optionTypes)=>{
+   fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&units=metric&appid=${Key}`)
+    .then(res=>res.json())
+    .then(data=>console.log(data)) 
+  
+  }
+
+  const onSearch=()=>{
+    if(!city){return}
+    getForcast(city)
+  }
+
+
+  const onOptionSelect =(option:optionTypes)=>{
+    setCity(option)
+    
+  }
+
+  useEffect(()=>{
+    if(city){
+      setTerm(city.name)
+      setOptions([])
+    }
+
+  },[city])
+
   console.log(term)
   return (
+    
     <div className="App">
-     <section className='section'>
-        <h2 className='weathertitle'>Weather <span className='strong'>Forcast</span></h2>
-        <p className='info'>Enter below a place you want to know the weather of and select an option from the list</p>
-        <div className='formWrapper'>  
-        <input className='input' type="text" value={term} onChange={onInputchange}/> 
-          
-          <ul className='list'>
-          {options.map((item:{name:string,country:string})=>(
-            <p>{item.name}, {item.country}</p>
-          ))}
-          </ul>
-          
-
-
-
-          <button className='search'>Search</button>      
-        </div>
-     </section>
+     <Search options={options} onOptionSelect={onOptionSelect} onInputchange={onInputchange} onSearch={onSearch} term={term} ></Search>
     </div>
   )
 }

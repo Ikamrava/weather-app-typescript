@@ -25,15 +25,19 @@ export interface ForcastType{
             icon:string
             description:string
         }]
-    }]
-    wind: {
+
+        wind: {
         speed:number
         deg:number
-        guest:number
-    }
-    clouds:{
+        gust:number
+         }
+
+        clouds:{
         all:number
-    }
-    pop:number
-    visibility:number
+        }
+
+        pop:number
+        visibility:number
+    }]
+   
 }

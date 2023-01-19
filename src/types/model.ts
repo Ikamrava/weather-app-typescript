@@ -12,6 +12,7 @@ export interface ForcastType{
     sunset:number
     list:[{
         dt:number
+        dt_txt:string 
         main:{
             feels_like:number
             humidity:number

@@ -1,5 +1,13 @@
 .forcastWrapper{
     margin: 1rem;
+}
+
+.date{
+  padding: 1rem;
+  cursor: pointer;
+}
+.date:hover{
+    background-color: #7BB4BC;
     
 }
 

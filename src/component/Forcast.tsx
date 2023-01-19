@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ForcastType } from '../types/model'
 import "./forcast.css"
 import Sunrise from './Icons/Sunrise'
@@ -10,15 +10,29 @@ type Props = {
   data:ForcastType
 }
 
+const date = (date:string):string=>{
+  const listofMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+  const monthText = listofMonths[Number(date.slice(6,7))-1]
+  const day = date.slice(8,10)
+  return  (`${day} ${monthText}`)
+}
+
+console.log(date("2023-01-19 21:00:00"))
+
 const Degree = ({temp}:{temp:number}):JSX.Element=>{
  return (<span className='degreeSpan'>{temp}<sup>o</sup></span>)
 }
 const Forcast = ({data}:Props):JSX.Element => {
-    const today = data.list[0]
+    const [day,setDay]=useState<number>(0)
+    const today = data.list[day]
+    const changeDate=(i:number)=>{
+      setDay(i)
+    }
     const days = data.list.map((item ,i)=>{
         return(   
-        <div  key={i}>
-            <p>{i===0 ? "Now" : new Date(item.dt * 1000).getHours()}</p>
+        <div className='date' key={i} onClick={()=>changeDate(i)}>
+            <p>{i===0 ? <div>{`${date(item.dt_txt)}  Now`}</div> : 
+            <div>{`${date(item.dt_txt)}  ${new Date(item.dt_txt).getHours()}:00`}</div>}</p>
             <img src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
             alt={`weather_icon_${item.weather[0].description}`} />
             <p className='hourly-degree'>{Math.round(item.main.temp)}<sup>o</sup></p>
